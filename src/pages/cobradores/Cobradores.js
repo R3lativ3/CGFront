@@ -15,9 +15,8 @@ const AllCobradores = () => {
   useEffect(() => {
     const getAll = async () => {
       try{
-        const resp = await axios.get('http://localhost:8000/api/cobradores')
-        console.log(resp)
-        setCobradores(resp.data)
+        const { data } = await axios.get('http://localhost:8000/api/cobradores')
+        setCobradores(data)
         setLoading(false)  
       }
       catch(e){
@@ -31,32 +30,28 @@ const AllCobradores = () => {
 
   }, [])
 
-  function rows(){
-
+  const rows = cobradores.map(x => {
     return (
-      cobradores.map(x => 
-        <tr key={x.id} >
-          <td className="border-0">
-            <a href="#Unites States" className="d-flex align-items-center">
-              <div><span className="h6">{x.nombres} {x.apellidos}</span></div>
-            </a>
-          </td>
-          <td className="border-0 fw-bold">{x.telefono}</td>
-          <td className="border-0 fw-bold">{x.nombreRuta}</td>
-          <td className="border-0 fw-bold">{x.sede}</td>
-          <td className="border-0">
-            <Button variant="outline-primary" size="sm" className="m-1">
-              <FontAwesomeIcon icon={faEdit} /> Editar
-            </Button>
-            <Button variant="outline-danger" size="sm" className="m-1">
-              <FontAwesomeIcon icon={faReceipt} /> Eliminar
-            </Button>
-          </td>
-        </tr>
-      )
+      <tr key={x.id} >
+        <td className="border-0">
+          <a href="#Unites States" className="d-flex align-items-center">
+            <div><span className="h6">{x.nombres} {x.apellidos}</span></div>
+          </a>
+        </td>
+        <td className="border-0 fw-bold">{x.telefono}</td>
+        <td className="border-0 fw-bold">{x.nombreRuta}</td>
+        <td className="border-0 fw-bold">{x.sede}</td>
+        <td className="border-0">
+          <Button variant="outline-primary" size="sm" className="m-1">
+            <FontAwesomeIcon icon={faEdit} /> Editar
+          </Button>
+          <Button variant="outline-danger" size="sm" className="m-1">
+            <FontAwesomeIcon icon={faReceipt} /> Eliminar
+          </Button>
+        </td>
+      </tr>
     )
-  }
-
+  })
 
   return (
     <>
@@ -98,7 +93,7 @@ const AllCobradores = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows()}
+                  {rows}
                 </tbody>
               </Table>        
             </Card.Body>
